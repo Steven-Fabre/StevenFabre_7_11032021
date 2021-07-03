@@ -7,7 +7,7 @@ class Plat {
     this.time = data.time;
     this.description = data.description;
     this.ustensils = data.ustensils;
-    this.appareils = data.appliances;
+    this.appareils = [data.appliance];
   }
 
   render() {
@@ -20,11 +20,24 @@ class Plat {
             <h3><i class="far fa-clock"></i> ${this.time} min</h3>
         </div>
         <div class="body__description">
-            <div class="ingredients" id=${this.id}></div>
+            <div class="ingredients" id=${
+              this.id
+            }>${this.renderIngredients()}</div>
             <p class="instruction"> ${this.description}</p>
         </div>
     </div>
     </article>
     `;
+  }
+
+  renderIngredients() {
+    let html = ``;
+    for (let item of this.ingredients) {
+      let balise = `<p class="filters"><span>${item.ingredient}</span>${
+        item.quantity ? ": " + item.quantity : ""
+      } ${item.unit ? item.unit : ""}</p>`;
+      html += balise;
+    }
+    return html;
   }
 }

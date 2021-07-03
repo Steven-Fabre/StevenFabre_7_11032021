@@ -3,7 +3,7 @@
 }
 
 body {
-  width: 80%;
+  width: 90%;
   margin: auto;
 }
 
@@ -84,12 +84,27 @@ span {
   justify-content: space-between;
 }
 
+.hide {
+  display: none;
+}
+
+#dropdowns {
+  display: flex;
+}
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  width: 170px;
+  height: 69px;
+}
+
 .plat {
   display: flex;
   flex-direction: column;
   height: 364px;
   width: 380px;
-  margin: 15px 0;
+  margin: 15px 5px;
   border-radius: 5px;
   background: #e7e7e7;
 }
