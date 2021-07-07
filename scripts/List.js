@@ -2,9 +2,6 @@ class List {
   constructor() {
     this.all = [];
     this.selected = [];
-    this.ingredients = new Set();
-    this.ustensils = new Set();
-    this.appareils = new Set();
   }
 
   add(item) {
@@ -17,25 +14,11 @@ class List {
 
   display(array) {
     let html = ``;
-    let destination = document.getElementById("plats");
+    let destination = document.getElementById("meals");
     for (let item of array) {
       html += item.render();
     }
     destination.innerHTML = html;
-  }
-
-  listing() {
-    for (let plat of this.all) {
-      for (let item of plat.ingredients) {
-        this.ingredients.add(item.ingredient);
-      }
-      for (let item of plat.ustensils) {
-        this.ustensils.add(item);
-      }
-      for (let item of plat.appareils) {
-        this.appareils.add(item);
-      }
-    }
   }
 
   checkItem(categorie, input) {
@@ -43,7 +26,7 @@ class List {
       case "ingredients__input":
         this.checkIngredients(input);
         break;
-      case "ustensiles__input":
+      case "ustensils__input":
         this.checkUstensils(input);
         break;
       case "appareils__input":

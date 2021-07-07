@@ -1,8 +1,13 @@
 const list = new List();
+const ingredients = new Ingredients();
 for (let item of recipes) {
-  let plat = new Plat(item);
+  let plat = new Meal(item);
   list.add(plat);
+  for (let item of plat.ingredients) {
+    ingredients.all.add(item.ingredient);
+  }
 }
+ingredients.collectIngredients(list.all);
 list.display(list.all);
 
 const categories = document.querySelectorAll(".categories");
@@ -25,4 +30,6 @@ categories.forEach((btn) =>
   })
 );
 
-list.listing();
+document.addEventListener("keydown", function (e) {
+  if (e.key === "e") ingredients.displayIngredients();
+});

@@ -1,12 +1,10 @@
 * {
   font-family: "Lato", sans-serif;
 }
-
 body {
   width: 90%;
   margin: auto;
 }
-
 header {
   display: flex;
   flex-direction: column;
@@ -14,7 +12,6 @@ header {
   justify-content: center;
   height: 150px;
 }
-
 .title {
   color: #d04f4f;
   font-family: "DM Sans", sans-serif;
@@ -29,7 +26,6 @@ header {
   width: 50px;
   margin: 0 auto;
 }
-
 .main-search {
   position: relative;
   width: 100%;
@@ -78,25 +74,10 @@ span {
   font-weight: bold;
 }
 
-#plats {
+#meals {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-}
-
-.hide {
-  display: none;
-}
-
-#dropdowns {
-  display: flex;
-}
-
-.dropdown {
-  display: flex;
-  flex-direction: column;
-  width: 170px;
-  height: 69px;
 }
 
 .plat {
@@ -111,6 +92,7 @@ span {
 
 .photoplat {
   border-radius: 5px 5px 0px 0px;
+
   width: 100%;
   height: 178px;
   min-height: 178px;
@@ -142,13 +124,11 @@ span {
 .filters {
   margin: 0;
 }
-
 .ingredients {
   display: flex;
   flex-direction: column;
   font-size: 12px;
   line-height: 14px;
-  width: 50%;
 }
 
 .instruction {
@@ -165,4 +145,86 @@ span {
   -webkit-box-orient: vertical;
 }
 
-/*# sourceMappingURL=index.css.map */
+// DROPDOWN STYLE
+
+#dropdowns {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.dropdown {
+  transition: width 0.4s ease 0.4s;
+  width: 170px;
+  margin: 20px 20px 20px 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+.dropdown__active {
+  transition: width 0.4s ease;
+  width: 667px;
+}
+
+.categories {
+  background: #3282f7;
+  outline: none;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  height: 69px;
+  font-family: Lato;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.secondary__list {
+  max-height: 2000px;
+  transition: all 1s ease 0.4s;
+  opacity: 1;
+  background: #3282f7;
+  position: absolute;
+  top: 65px;
+  z-index: 99;
+  display: grid;
+  gap: 5px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 27px;
+  width: 667px;
+  border-radius: 0px 0px 5px 5px;
+}
+
+.secondary__result {
+  transition: all 0.4s ease 0.4s;
+  align-content: center;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 16px;
+  max-height: 21px;
+  color: #ffffff;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  box-sizing: content-box;
+}
+
+.secondary__result::before {
+  content: " \00a0 \00a0 ";
+}
+
+.hide {
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+  max-height: 0;
+  overflow: hidden;
+}

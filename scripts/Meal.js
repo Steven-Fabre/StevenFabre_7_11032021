@@ -1,4 +1,4 @@
-class Plat {
+class Meal {
   constructor(data) {
     this.id = data.id;
     this.name = data.name;
