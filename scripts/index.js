@@ -15,10 +15,10 @@ const categories = document.querySelectorAll(".categories");
 categories.forEach((btn) =>
   btn.addEventListener("input", function (e) {
     if (this.value.length >= 3) {
-      btn.nextElementSibling.classList.remove("hide");
-      list.checkItem(btn.id, btn.value);
+      // btn.nextElementSibling.classList.remove("hide");
+      list.filterRecipes(btn.value);
     } else {
-      btn.nextElementSibling.classList.add("hide");
+      // btn.nextElementSibling.classList.add("hide");
       list.display(list.all);
     }
   })
@@ -26,10 +26,10 @@ categories.forEach((btn) =>
 
 categories.forEach((btn) =>
   btn.addEventListener("focusout", function () {
-    btn.nextElementSibling.classList.add("hide");
+    // btn.nextElementSibling.classList.add("hide");
   })
 );
 
 document.addEventListener("keydown", function (e) {
-  if (e.key === "e") ingredients.displayIngredients();
+  if (e.key === "Enter") ingredients.displayIngredients();
 });

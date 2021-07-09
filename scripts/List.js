@@ -2,6 +2,7 @@ class List {
   constructor() {
     this.all = [];
     this.selected = [];
+    this.result = new Set();
   }
 
   add(item) {
@@ -21,29 +22,29 @@ class List {
     destination.innerHTML = html;
   }
 
-  checkItem(categorie, input) {
-    switch (categorie) {
-      case "ingredients__input":
-        this.checkIngredients(input);
-        break;
-      case "ustensils__input":
-        this.checkUstensils(input);
-        break;
-      case "appareils__input":
-        console.log("appareils");
-        break;
-    }
+  filterRecipes(input) {
+    this.result = new Set();
+    this.all.forEach((recipe) =>
+      recipe.ingredients.filter((ingredient) => {
+        this.recipeMatchesIngredients(this.normalizeInput(ingredient.ingredient), this.normalizeInput(input), recipe);
+      })
+    );
+    console.log(this.result);
   }
 
-  checkIngredients(input) {
-    this.all.forEach((plat) => {
-      for (let item of plat.ingredients) {
-        if (input == item.ingredient) {
-          this.addSelected(plat);
-        }
-      }
-    });
-    this.display(this.selected);
+  recipeMatchesIngredients(ingredientArray, input, recipe) {
+    input.every((element) => ingredientArray.find((ingredient) => ingredient.startsWith(element)))
+      ? this.result.add(recipe)
+      : "";
+  }
+
+  normalizeInput(input) {
+    return input
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace("'", " ")
+      .split(" ");
   }
 
   checkUstensils(input) {
