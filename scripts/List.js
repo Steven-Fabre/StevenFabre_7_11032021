@@ -29,7 +29,7 @@ class List {
         this.recipeMatchesIngredients(this.normalizeInput(ingredient.ingredient), this.normalizeInput(input), recipe);
       })
     );
-    console.log(this.result);
+    this.display(this.result);
   }
 
   recipeMatchesIngredients(ingredientArray, input, recipe) {
@@ -56,5 +56,11 @@ class List {
       }
       this.display(this.selected);
     });
+  }
+
+  displayListElements(datavalue) {
+    document.getElementById(`${datavalue}`).classList.add("dropdown__active");
+    document.getElementById(`${datavalue}__list`).classList.remove("hide");
+    document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.remove("hide"));
   }
 }

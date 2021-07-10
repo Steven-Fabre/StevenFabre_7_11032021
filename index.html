@@ -4,13 +4,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Lato&family=Roboto&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Lato:wght@700&family=Roboto&display=swap"
       rel="stylesheet"
     />
-    <script
-      src="https://kit.fontawesome.com/984b353dcf.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/984b353dcf.js" crossorigin="anonymous"></script>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,25 +22,27 @@
     </header>
     <main>
       <div class="main-search">
-        <input
-          class="search"
-          type="text"
-          placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette"
-        />
+        <input class="search" type="text" placeholder="Rechercher un ingrédient, appareil, ustensiles ou une recette" />
         <i class="fas fa-search"></i>
       </div>
       <div id="dropdowns">
-        <div class="dropdown dropdown__active" id="ingredients">
-          <input class="categories" id="ingredients__input" valuetype="text" />
-          <div class="secondary__list" id="ingredients__list"></div>
+        <div class="dropdown" id="ingredients">
+          <input
+            class="categories"
+            id="ingredients__input"
+            data-value="ingredients"
+            placeholder="Ingredients"
+            valuetype="text"
+          />
+          <div class="secondary__list hide" id="ingredients__list"></div>
         </div>
         <div class="dropdown" id="appareils">
-          <input class="categories" id="appareils__input" type="text" />
+          <input class="categories" id="appareils__input" data-value="appareils" placeholder="Appareils" type="text" />
           <div class="secondary__list hide" id="appareils__list"></div>
         </div>
         <div class="dropdown" id="ustensils">
-          <input class="categories" id="ustensils__input" type="text" />
-          <div class="secondary__list hide" id="ustensiles__list"></div>
+          <input class="categories" id="ustensils__input" data-value="ustensils" placeholder="Ustensiles" type="text" />
+          <div class="secondary__list hide" id="ustensils__list"></div>
         </div>
       </div>
       <div id="meals"></div>

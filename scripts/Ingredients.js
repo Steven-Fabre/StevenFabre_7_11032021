@@ -6,6 +6,7 @@ class Ingredients {
   }
 
   collectIngredients(recipes) {
+    this.selected = new Set();
     recipes.forEach((ingredients) => {
       ingredients.ingredients.forEach((ingredient) => {
         this.selected.add(ingredient.ingredient);
@@ -20,13 +21,5 @@ class Ingredients {
       html += `<span data-ingredient-id=${ingredient} class="secondary__result">${ingredient}</span>`;
     }
     document.getElementById("ingredients__list").innerHTML = html;
-  }
-
-  displayIngredients() {
-    document.getElementById("ingredients").classList.toggle("dropdown__active");
-    document.getElementById("ingredients__list").classList.toggle("hide");
-    document
-      .querySelectorAll(".secondary__result")
-      .forEach((el) => el.classList.toggle("hide"));
   }
 }

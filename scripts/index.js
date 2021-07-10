@@ -17,16 +17,25 @@ categories.forEach((btn) =>
     if (this.value.length >= 3) {
       // btn.nextElementSibling.classList.remove("hide");
       list.filterRecipes(btn.value);
+      console.log(list.result);
+      ingredients.collectIngredients(list.result);
     } else {
       // btn.nextElementSibling.classList.add("hide");
       list.display(list.all);
     }
   })
 );
+categories.forEach((btn) =>
+  btn.addEventListener("click", function (e) {
+    list.displayListElements(e.target.getAttribute("data-value"));
+  })
+);
 
 categories.forEach((btn) =>
   btn.addEventListener("focusout", function () {
-    // btn.nextElementSibling.classList.add("hide");
+    btn.closest("div").classList.remove("dropdown__active");
+    btn.nextElementSibling.childNodes.forEach((e) => e.classList.add("hide"));
+    btn.nextElementSibling.classList.add("hide");
   })
 );
 
