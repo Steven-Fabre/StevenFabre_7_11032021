@@ -27,6 +27,7 @@
       </div>
       <div id="dropdowns">
         <div class="dropdown" id="ingredients">
+          <i id="ingredients__chevron" class="fas fa-chevron-down"></i>
           <input
             class="categories"
             id="ingredients__input"
@@ -36,11 +37,19 @@
           />
           <div class="secondary__list hide" id="ingredients__list"></div>
         </div>
-        <div class="dropdown" id="appareils">
-          <input class="categories" id="appareils__input" data-value="appareils" placeholder="Appareils" type="text" />
-          <div class="secondary__list hide" id="appareils__list"></div>
+        <div class="dropdown" id="appliances">
+          <i id="appliances__chevron" class="fas fa-chevron-down"></i>
+          <input
+            class="categories"
+            id="appliances__input"
+            data-value="appliances"
+            placeholder="Appareils"
+            type="text"
+          />
+          <div class="secondary__list hide" id="appliances__list"></div>
         </div>
         <div class="dropdown" id="ustensils">
+          <i id="ustensils__chevron" class="fas fa-chevron-down"></i>
           <input class="categories" id="ustensils__input" data-value="ustensils" placeholder="Ustensiles" type="text" />
           <div class="secondary__list hide" id="ustensils__list"></div>
         </div>
@@ -51,6 +60,9 @@
   <script type="text/javascript" src="./scripts/recipes.js"></script>
   <script type="text/javascript" src="./scripts/List.js"></script>
   <script type="text/javascript" src="./scripts/Meal.js"></script>
+  <script type="text/javascript" src="./scripts/Categories.js"></script>
   <script type="text/javascript" src="./scripts/Ingredients.js"></script>
+  <script type="text/javascript" src="./scripts/Appliances.js"></script>
+  <script type="text/javascript" src="./scripts/Ustensils.js"></script>
   <script type="text/javascript" src="./scripts/index.js"></script>
 </html>

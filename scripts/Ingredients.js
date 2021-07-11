@@ -1,25 +1,23 @@
-class Ingredients {
+class Ingredients extends Categories {
   constructor() {
-    this.all = new Set();
-    this.selected = new Set();
-    this.setIngredients = new Set();
+    super();
   }
 
-  collectIngredients(recipes) {
+  collect(recipes) {
     this.selected = new Set();
     recipes.forEach((ingredients) => {
       ingredients.ingredients.forEach((ingredient) => {
         this.selected.add(ingredient.ingredient);
       });
     });
-    this.renderIngredients(this.selected);
+    this.renderItem(this.selected, "ingredients");
   }
 
-  renderIngredients(ingredients) {
-    let html = ``;
-    for (let ingredient of ingredients) {
-      html += `<span data-ingredient-id=${ingredient} class="secondary__result">${ingredient}</span>`;
-    }
-    document.getElementById("ingredients__list").innerHTML = html;
+  filter(input) {
+    list.all.forEach((recipe) =>
+      recipe.ingredients.filter((ingredient) => {
+        this.matchingRecipe(this.normalizeInput(ingredient.ingredient), this.normalizeInput(input), recipe);
+      })
+    );
   }
 }

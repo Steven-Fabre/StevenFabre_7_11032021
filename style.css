@@ -156,6 +156,7 @@ span {
 }
 
 .dropdown {
+  position: relative;
   transition: width 0.4s ease 0.4s;
   width: 170px;
   margin: 20px 20px 20px 0;
@@ -225,8 +226,8 @@ span {
   content: "   ";
 }
 
-#appareils__input,
-#appareils__list {
+#appliances__input,
+#appliances__list {
   background: #68d9a4;
 }
 
@@ -235,18 +236,32 @@ span {
   background: #ed6454;
 }
 
-::placeholder {
+.categories::placeholder {
   color: white;
 }
 
 .hide {
-  -webkit-transition: all 0.2s ease;
-  -moz-transition: all 0.2s ease;
-  -ms-transition: all 0.2s ease;
-  -o-transition: all 0.2s ease;
   transition: all 0.2s ease;
   max-height: 0;
   overflow: hidden;
+}
+
+span {
+  cursor: pointer;
+}
+
+.fa-chevron-down {
+  position: absolute;
+  top: 25px;
+  right: 15px;
+  transition: all 0.4s ease;
+  color: white;
+  font-size: 22px;
+}
+
+.chevron__active {
+  transition: all 0.4s ease;
+  transform: rotate(180deg);
 }
 
 /*# sourceMappingURL=style.css.map */

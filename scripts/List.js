@@ -1,16 +1,11 @@
 class List {
   constructor() {
     this.all = [];
-    this.selected = [];
-    this.result = new Set();
+    this.selected = new Set();
   }
 
   add(item) {
     this.all.push(item);
-  }
-
-  addSelected(item) {
-    this.selected.push(item);
   }
 
   display(array) {
@@ -22,45 +17,45 @@ class List {
     destination.innerHTML = html;
   }
 
-  filterRecipes(input) {
-    this.result = new Set();
-    this.all.forEach((recipe) =>
-      recipe.ingredients.filter((ingredient) => {
-        this.recipeMatchesIngredients(this.normalizeInput(ingredient.ingredient), this.normalizeInput(input), recipe);
-      })
-    );
-    this.display(this.result);
+  filterByIngredients(input) {
+    this.selected = new Set();
+    ingredients.filter(input);
+    this.display(this.selected);
   }
 
-  recipeMatchesIngredients(ingredientArray, input, recipe) {
-    input.every((element) => ingredientArray.find((ingredient) => ingredient.startsWith(element)))
-      ? this.result.add(recipe)
-      : "";
+  filterByAppliances(input) {
+    this.selected = new Set();
+    appliances.filter(input);
+    this.display(this.selected);
   }
 
-  normalizeInput(input) {
-    return input
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace("'", " ")
-      .split(" ");
+  filterByUstensils(input) {
+    this.selected = new Set();
+    ustensils.filter(input);
+    this.display(this.selected);
   }
 
-  checkUstensils(input) {
-    this.all.forEach((plat) => {
-      for (let item of plat.ustensils) {
-        if (input == item) {
-          this.addSelected(plat);
-        }
-      }
-      this.display(this.selected);
-    });
+  displayListElements(datavalue, chevronID) {
+    document.getElementById(`${datavalue}`).classList.toggle("dropdown__active");
+    if (document.getElementById(`${datavalue}`).classList.contains("dropdown__active")) {
+      document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.remove("hide"));
+      document.getElementById(chevronID).classList.add("chevron__active");
+    } else {
+      document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.add("hide"));
+    }
+    document.getElementById(`${datavalue}__list`).classList.toggle("hide");
   }
 
-  displayListElements(datavalue) {
-    document.getElementById(`${datavalue}`).classList.add("dropdown__active");
-    document.getElementById(`${datavalue}__list`).classList.remove("hide");
-    document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.remove("hide"));
+  hideList() {
+    document.querySelectorAll(".dropdown").forEach((e) => e.classList.remove("dropdown__active"));
+    document.querySelectorAll(".secondary__list").forEach((e) => e.classList.add("hide"));
+    document.querySelectorAll(".secondary__result").forEach((e) => e.classList.add("hide"));
+    document.querySelectorAll(".fa-chevron-down").forEach((e) => e.classList.remove("chevron__active"));
+  }
+
+  initCategories() {
+    ingredients.collect(list.all);
+    appliances.collect(list.all);
+    ustensils.collect(list.all);
   }
 }

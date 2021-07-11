@@ -7,7 +7,7 @@ class Meal {
     this.time = data.time;
     this.description = data.description;
     this.ustensils = data.ustensils;
-    this.appareils = [data.appliance];
+    this.appliances = [data.appliance];
   }
 
   render() {
@@ -20,9 +20,7 @@ class Meal {
             <h3><i class="far fa-clock"></i> ${this.time} min</h3>
         </div>
         <div class="body__description">
-            <div class="ingredients" id=${
-              this.id
-            }>${this.renderIngredients()}</div>
+            <div class="ingredients" id=${this.id}>${this.renderIngredients()}</div>
             <p class="instruction"> ${this.description}</p>
         </div>
     </div>
@@ -33,9 +31,9 @@ class Meal {
   renderIngredients() {
     let html = ``;
     for (let item of this.ingredients) {
-      let balise = `<p class="filters"><span>${item.ingredient}</span>${
-        item.quantity ? ": " + item.quantity : ""
-      } ${item.unit ? item.unit : ""}</p>`;
+      let balise = `<p class="filters"><span>${item.ingredient}</span>${item.quantity ? ": " + item.quantity : ""} ${
+        item.unit ? item.unit : ""
+      }</p>`;
       html += balise;
     }
     return html;
