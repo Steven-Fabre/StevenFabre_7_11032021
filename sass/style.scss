@@ -154,7 +154,7 @@ span {
 
 .dropdown {
   position: relative;
-  transition: width 0.4s ease 0.4s;
+  transition: width 0.2s ease 0.2s;
   width: 170px;
   margin: 20px 20px 20px 0;
   position: relative;
@@ -189,12 +189,12 @@ span {
 
 .secondary__list {
   max-height: 2000px;
-  transition: all 1s ease 0.4s;
+  transition: all 1s ease 0.2s;
   opacity: 1;
   background: #3282f7;
   position: absolute;
   top: 65px;
-  z-index: 99;
+  z-index: 59;
   display: grid;
   gap: 5px;
   grid-template-columns: repeat(3, 1fr);
@@ -204,7 +204,8 @@ span {
 }
 
 .secondary__result {
-  transition: all 0.4s ease 0.4s;
+  z-index: 1999;
+  transition: all 0.2s ease 0.2s;
   align-content: center;
   font-family: "Lato";
   font-style: normal;
@@ -223,13 +224,19 @@ span {
   content: " \00a0 \00a0 ";
 }
 
+.ingredients__selected {
+  background: #3282f7;
+}
+
 #appliances__input,
-#appliances__list {
+#appliances__list,
+.appliances__selected {
   background: #68d9a4;
 }
 
 #ustensils__input,
-#ustensils__list {
+#ustensils__list,
+.ustensils__selected {
   background: #ed6454;
 }
 .categories::placeholder {
@@ -248,12 +255,33 @@ span {
   position: absolute;
   top: 25px;
   right: 15px;
-  transition: all 0.4s ease;
+  transition: all 0.2s ease;
   color: white;
   font-size: 22px;
 }
 
 .chevron__active {
-  transition: all 0.4s ease;
+  transition: all 0.2s ease;
   transform: rotate(180deg);
+}
+#selecteds {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.selected {
+  border-radius: 5px;
+  color: white;
+  padding: 8px;
+  margin: 20px 10px 0 10px;
+}
+
+.selected::after {
+  font-family: "FontAwesome";
+  content: "";
+  display: inline-block;
+  padding-left: 3px;
+  vertical-align: middle;
+  font-weight: normal;
 }

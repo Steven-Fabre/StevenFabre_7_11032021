@@ -2,6 +2,7 @@ const list = new List();
 const ingredients = new Ingredients();
 const appliances = new Appliances();
 const ustensils = new Ustensils();
+const filters = [ingredients, appliances, ustensils];
 const categories = document.querySelectorAll(".categories");
 const chevrons = document.querySelectorAll(".fa-chevron-down");
 
@@ -17,17 +18,14 @@ categories.forEach((btn) =>
     if (btn.value.length >= 3) {
       if (btn.getAttribute("data-value") == "ingredients") {
         list.filterByIngredients(btn.value);
-        ingredients.collect(list.selected);
       }
 
       if (btn.getAttribute("data-value") == "appliances") {
         list.filterByAppliances(btn.value);
-        appliances.collect(list.selected);
       }
 
       if (btn.getAttribute("data-value") == "ustensils") {
         list.filterByUstensils(btn.value);
-        ustensils.collect(list.selected);
       }
     } else {
       list.initCategories();
@@ -35,25 +33,47 @@ categories.forEach((btn) =>
     }
   })
 );
+listenForInput();
 
-chevrons.forEach((chevron) =>
-  chevron.addEventListener("click", function () {
-    if (!chevron.closest("div").classList.contains("dropdown__active")) {
-      list.displayListElements(chevron.nextElementSibling.getAttribute("data-value"), chevron.id);
-    } else {
+function listenForInput() {
+  categories.forEach((input) =>
+    input.addEventListener("focus", function () {
       list.hideList();
-    }
-  })
-);
+      list.displayListElements(input.getAttribute("data-value"), input.id);
+    })
+  );
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(`.dropdown__active`)) list.hideList();
+    if (e.target.closest(".fa-chevron-down")) list.hideList();
+    if (e.target.closest(".secondary__result")) addFiltered(e.target);
+    if (e.target.closest(".selected")) removeFiltered(e.target);
+  });
+}
 
-document.addEventListener("click", function (e) {
-  if (!e.target.closest("div").classList.contains("dropdown")) {
-    list.hideList();
+function addFiltered(e) {
+  renderSelected(e.getAttribute("data-id"), e.getAttribute("data-categorie"));
+  if (e.getAttribute("data-categorie") == "ingredients") {
+    ingredients.selected.add(e.getAttribute("data-id"));
+    ingredients.filterSelection(ingredients.selected);
   }
-});
 
-// function changeValue(id, categorie) {
-// L'idée serait de créer de manière dynamique la "catégorie"/class pour appliquer la fonction en conséquences
-//   list.filterByIngredients(id);
-//   categorie.collect(list.selected);
-// }
+  if (e.getAttribute("data-categorie") == "appliances") {
+    appliances.selected.add(e.getAttribute("data-id"));
+    list.filterSelection(appliances.selected);
+  }
+
+  if (e.getAttribute("data-categorie") == "ustensils") {
+    ustensils.selected.add(e.getAttribute("data-id"));
+    list.filterSelection(ustensils.selected);
+  }
+}
+
+function renderSelected(ingredient, categorie) {
+  document
+    .getElementById("selecteds")
+    .insertAdjacentHTML("beforeend", `<span class="${categorie}__selected selected">${ingredient}</span>`);
+}
+
+function removeFiltered(e) {
+  e.remove();
+}

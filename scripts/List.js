@@ -1,6 +1,7 @@
 class List {
   constructor() {
     this.all = [];
+    this.filtered = new Set();
     this.selected = new Set();
   }
 
@@ -18,28 +19,42 @@ class List {
   }
 
   filterByIngredients(input) {
-    this.selected = new Set();
-    ingredients.filter(input);
-    this.display(this.selected);
+    this.filtered = new Set();
+    ingredients.filtered = new Set();
+    ingredients.filter(input, list.all);
+    this.display(this.filtered);
+    ingredients.collect(list.filtered);
+    ingredients.renderItem(ingredients.filtered, "ingredients");
   }
 
   filterByAppliances(input) {
-    this.selected = new Set();
-    appliances.filter(input);
-    this.display(this.selected);
+    this.filtered = new Set();
+    appliances.filtered = new Set();
+    appliances.filter(input, list.all);
+    this.display(this.filtered);
+    appliances.collect(list.filtered);
+    appliances.renderItem(appliances.filtered, "appliances");
   }
 
   filterByUstensils(input) {
-    this.selected = new Set();
-    ustensils.filter(input);
-    this.display(this.selected);
+    this.filtered = new Set();
+    ustensils.filtered = new Set();
+    ustensils.filter(input, list.all);
+    this.display(this.filtered);
+    ustensils.collect(list.filtered);
+    ustensils.renderItem(ustensils.filtered, "ustensils");
   }
 
-  displayListElements(datavalue, chevronID) {
+  checkForSelected() {
+    if (this.selected.length == 0) return list.all;
+    else return list.selected;
+  }
+
+  displayListElements(datavalue, inputID) {
     document.getElementById(`${datavalue}`).classList.toggle("dropdown__active");
     if (document.getElementById(`${datavalue}`).classList.contains("dropdown__active")) {
       document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.remove("hide"));
-      document.getElementById(chevronID).classList.add("chevron__active");
+      document.getElementById(inputID).nextElementSibling.classList.add("chevron__active");
     } else {
       document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.add("hide"));
     }
@@ -57,5 +72,42 @@ class List {
     ingredients.collect(list.all);
     appliances.collect(list.all);
     ustensils.collect(list.all);
+    list.filterByIngredients("");
+    list.filterByAppliances("");
+    list.filterByUstensils("");
+  }
+
+  filterSelection(selectedlist) {
+    Array.from(selectedlist).every((element) => {
+      Array.from(list.filtered).forEach((item) => {
+        item.ingredients.find((ingredient) => {
+          if (ingredient.ingredient == element) {
+            list.selected.add(item);
+            list.filtered = list.selected;
+          }
+        });
+        if (item.appliances == element) {
+          list.selected.add(item);
+        }
+        item.ustensils.forEach((ustensil) => {
+          if (
+            this.capitalizeFirstLetter(
+              ustensil
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replace("'", " ")
+            ) == element
+          ) {
+            list.selected.add(item);
+          }
+        });
+      });
+    });
+    this.display(this.filtered);
+  }
+
+  capitalizeFirstLetter(string) {
+    return string && string[0].toUpperCase() + string.slice(1);
   }
 }

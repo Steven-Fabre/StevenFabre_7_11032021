@@ -1,18 +1,17 @@
 class Ustensils extends Categories {
   constructor() {
-    super();
+    super(Ustensils);
   }
 
   collect(recipes) {
-    this.selected = new Set();
+    this.all = new Set();
     recipes.forEach((recipe) => {
-      recipe.ustensils.forEach((ustensil) => this.selected.add(ustensil));
+      recipe.ustensils.forEach((ustensil) => this.all.add(ustensil));
     });
-    this.renderItem(this.selected, "ustensils");
   }
 
-  filter(input) {
-    list.all.forEach((recipe) =>
+  filter(input, list) {
+    list.forEach((recipe) =>
       recipe.ustensils.filter((ustensil) => {
         this.matchingRecipe(this.normalizeInput(ustensil), this.normalizeInput(input), recipe);
       })
