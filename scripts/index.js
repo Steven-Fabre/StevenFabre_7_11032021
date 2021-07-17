@@ -10,30 +10,28 @@ for (let item of recipes) {
   let plat = new Meal(item);
   list.add(plat);
 }
-list.initCategories();
-list.display(list.all);
+list.init();
 
-categories.forEach((btn) =>
-  btn.addEventListener("input", function () {
-    if (btn.value.length >= 3) {
-      if (btn.getAttribute("data-value") == "ingredients") {
-        list.filterByIngredients(btn.value);
-      }
-
-      if (btn.getAttribute("data-value") == "appliances") {
-        list.filterByAppliances(btn.value);
-      }
-
-      if (btn.getAttribute("data-value") == "ustensils") {
-        list.filterByUstensils(btn.value);
-      }
-    } else {
-      list.initCategories();
-      list.display(list.all);
-    }
-  })
-);
+categories.forEach((btn) => btn.addEventListener("input", listenForFiltering));
 listenForInput();
+
+function listenForFiltering(e) {
+  if (e.target.value.length >= 3) {
+    if (e.target.getAttribute("data-value") == "ingredients") {
+      list.filterByIngredients(e.target.value);
+    }
+
+    if (e.target.getAttribute("data-value") == "appliances") {
+      list.filterByAppliances(e.target.value);
+    }
+
+    if (e.target.getAttribute("data-value") == "ustensils") {
+      list.filterByUstensils(e.target.value);
+    }
+  } else {
+    list.init();
+  }
+}
 
 function listenForInput() {
   categories.forEach((input) =>
@@ -53,8 +51,9 @@ function listenForInput() {
 function addFiltered(e) {
   renderSelected(e.getAttribute("data-id"), e.getAttribute("data-categorie"));
   if (e.getAttribute("data-categorie") == "ingredients") {
-    ingredients.selected.add(e.getAttribute("data-id"));
-    ingredients.filterSelection(ingredients.selected);
+    // ingredients.selected.add(e.getAttribute("data-id"));
+    // ingredients.filterSelection(ingredients.selected);
+    ingredients.select(e.getAttribute("data-id"));
   }
 
   if (e.getAttribute("data-categorie") == "appliances") {

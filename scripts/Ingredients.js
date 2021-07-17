@@ -3,20 +3,36 @@ class Ingredients extends Categories {
     super(Ingredients);
   }
 
-  collect(recipes) {
-    this.all = new Set();
-    recipes.forEach((ingredients) => {
-      ingredients.ingredients.forEach((ingredient) => {
-        this.all.add(ingredient.ingredient);
+  collect(input) {
+    this.filtered = new Set();
+    list.filtered.forEach((recipe) => {
+      recipe.ingredients.forEach((ingredient) => {
+        this.isMatchingIngredient(ingredient, input, this.filtered, ingredient.ingredient);
       });
     });
   }
 
-  filter(input, list) {
-    list.forEach((recipe) =>
-      recipe.ingredients.filter((ingredient) => {
-        this.matchingRecipe(this.normalizeInput(ingredient.ingredient), this.normalizeInput(input), recipe);
+  filter(input) {
+    let newFilteredList = new Set();
+    list.all.forEach((recipe) =>
+      recipe.ingredients.forEach((ingredient) => {
+        this.isMatchingIngredient(ingredient, input, newFilteredList, recipe);
       })
     );
+    list.filtered = newFilteredList;
+  }
+
+  isMatchingIngredient(ingredient, input, destinationList, matchingItem) {
+    if (
+      this.normalizeInput(input).every((element) =>
+        this.normalizeInput(ingredient.ingredient).find((item) => item.includes(element))
+      )
+    ) {
+      destinationList.add(matchingItem);
+    }
+  }
+
+  select(input) {
+    this.selected.add(input);
   }
 }

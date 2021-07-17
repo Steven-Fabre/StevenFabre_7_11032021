@@ -9,40 +9,34 @@ class List {
     this.all.push(item);
   }
 
-  display(array) {
+  display() {
     let html = ``;
     let destination = document.getElementById("meals");
-    for (let item of array) {
+    for (let item of this.filtered) {
       html += item.render();
     }
     destination.innerHTML = html;
   }
 
   filterByIngredients(input) {
-    this.filtered = new Set();
-    ingredients.filtered = new Set();
-    ingredients.filter(input, list.all);
-    this.display(this.filtered);
-    ingredients.collect(list.filtered);
-    ingredients.renderItem(ingredients.filtered, "ingredients");
+    ingredients.filter(input);
+    ingredients.collect(input);
+    ingredients.renderItem("ingredients");
+    this.display();
   }
 
   filterByAppliances(input) {
-    this.filtered = new Set();
-    appliances.filtered = new Set();
-    appliances.filter(input, list.all);
-    this.display(this.filtered);
-    appliances.collect(list.filtered);
-    appliances.renderItem(appliances.filtered, "appliances");
+    appliances.collect(input);
+    appliances.filter(input);
+    appliances.renderItem("appliances");
+    this.display();
   }
 
   filterByUstensils(input) {
-    this.filtered = new Set();
-    ustensils.filtered = new Set();
-    ustensils.filter(input, list.all);
-    this.display(this.filtered);
-    ustensils.collect(list.filtered);
-    ustensils.renderItem(ustensils.filtered, "ustensils");
+    ustensils.collect(input);
+    ustensils.filter(input);
+    ustensils.renderItem("ustensils");
+    this.display();
   }
 
   checkForSelected() {
@@ -68,44 +62,43 @@ class List {
     document.querySelectorAll(".fa-chevron-down").forEach((e) => e.classList.remove("chevron__active"));
   }
 
-  initCategories() {
-    ingredients.collect(list.all);
-    appliances.collect(list.all);
-    ustensils.collect(list.all);
+  init() {
+    list.filtered = new Set(list.all);
     list.filterByIngredients("");
     list.filterByAppliances("");
     list.filterByUstensils("");
+    this.display();
   }
 
-  filterSelection(selectedlist) {
-    Array.from(selectedlist).every((element) => {
-      Array.from(list.filtered).forEach((item) => {
-        item.ingredients.find((ingredient) => {
-          if (ingredient.ingredient == element) {
-            list.selected.add(item);
-            list.filtered = list.selected;
-          }
-        });
-        if (item.appliances == element) {
-          list.selected.add(item);
-        }
-        item.ustensils.forEach((ustensil) => {
-          if (
-            this.capitalizeFirstLetter(
-              ustensil
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .replace("'", " ")
-            ) == element
-          ) {
-            list.selected.add(item);
-          }
-        });
-      });
-    });
-    this.display(this.filtered);
-  }
+  // filterSelection(selectedlist) {
+  //   Array.from(selectedlist).every((element) => {
+  //     Array.from(list.filtered).forEach((item) => {
+  //       item.ingredients.find((ingredient) => {
+  //         if (ingredient.ingredient == element) {
+  //           list.selected.add(item);
+  //           list.filtered = list.selected;
+  //         }
+  //       });
+  //       if (item.appliances == element) {
+  //         list.selected.add(item);
+  //       }
+  //       item.ustensils.forEach((ustensil) => {
+  //         if (
+  //           this.capitalizeFirstLetter(
+  //             ustensil
+  //               .toLowerCase()
+  //               .normalize("NFD")
+  //               .replace(/[\u0300-\u036f]/g, "")
+  //               .replace("'", " ")
+  //           ) == element
+  //         ) {
+  //           list.selected.add(item);
+  //         }
+  //       });
+  //     });
+  //   });
+  //   this.display();
+  // }
 
   capitalizeFirstLetter(string) {
     return string && string[0].toUpperCase() + string.slice(1);

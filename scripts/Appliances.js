@@ -3,18 +3,28 @@ class Appliances extends Categories {
     super(Appliances);
   }
 
-  collect(recipes) {
-    this.all = new Set();
-    recipes.forEach((recipe) => {
-      this.all.add(...recipe.appliances);
+  collect(input) {
+    this.filtered = new Set();
+    list.filtered.forEach((recipe) => {
+      this.isMatchingIngredient(...recipe.appliances, input, this.filtered, ...recipe.appliances);
     });
   }
 
-  filter(input, list) {
-    list.forEach((recipe) =>
-      recipe.appliances.filter((appliance) => {
-        this.matchingRecipe(this.normalizeInput(appliance), this.normalizeInput(input), recipe);
-      })
-    );
+  filter(input) {
+    let newFilteredList = new Set();
+    list.filtered.forEach((recipe) => {
+      this.isMatchingIngredient(...recipe.appliances, input, newFilteredList, recipe);
+    });
+    list.filtered = newFilteredList;
+  }
+
+  isMatchingIngredient(appliance, input, destinationList, matchingItem) {
+    if (
+      this.normalizeInput(input).every((element) =>
+        this.normalizeInput(appliance).find((item) => item.includes(element))
+      )
+    ) {
+      destinationList.add(matchingItem);
+    }
   }
 }

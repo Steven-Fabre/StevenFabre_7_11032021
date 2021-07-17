@@ -6,9 +6,9 @@ class Categories {
     this.type = type;
   }
 
-  renderItem(list, categorie) {
+  renderItem(categorie) {
     let html = ``;
-    for (let ingredient of list) {
+    for (let ingredient of this.filtered) {
       html += `<span data-id="${ingredient}"  data-categorie="${categorie}" class="secondary__result">${ingredient}</span>`;
     }
     document.getElementById(`${categorie}__list`).innerHTML = html;
@@ -21,16 +21,5 @@ class Categories {
       .replace(/[\u0300-\u036f]/g, "")
       .replace("'", " ")
       .split(" ");
-  }
-
-  matchingRecipe(recipeArray, input, recipe) {
-    input.every((element) =>
-      recipeArray.find((item) => {
-        if (item.startsWith(element)) {
-          this.filtered.add(list.capitalizeFirstLetter(recipeArray.join(" ")));
-          list.filtered.add(recipe);
-        }
-      })
-    );
   }
 }
