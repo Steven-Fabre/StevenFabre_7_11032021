@@ -34,5 +34,10 @@ class Ingredients extends Categories {
 
   select(input) {
     this.selected.add(input);
+    console.log(this.selected);
+  }
+
+  deselect(input) {
+    this.selected.delete(input.textContent);
   }
 }

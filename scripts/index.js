@@ -51,19 +51,15 @@ function listenForInput() {
 function addFiltered(e) {
   renderSelected(e.getAttribute("data-id"), e.getAttribute("data-categorie"));
   if (e.getAttribute("data-categorie") == "ingredients") {
-    // ingredients.selected.add(e.getAttribute("data-id"));
-    // ingredients.filterSelection(ingredients.selected);
     ingredients.select(e.getAttribute("data-id"));
   }
 
   if (e.getAttribute("data-categorie") == "appliances") {
-    appliances.selected.add(e.getAttribute("data-id"));
-    list.filterSelection(appliances.selected);
+    appliances.select(e.getAttribute("data-id"));
   }
 
   if (e.getAttribute("data-categorie") == "ustensils") {
-    ustensils.selected.add(e.getAttribute("data-id"));
-    list.filterSelection(ustensils.selected);
+    ustensils.select(e.getAttribute("data-id"));
   }
 }
 
@@ -74,5 +70,17 @@ function renderSelected(ingredient, categorie) {
 }
 
 function removeFiltered(e) {
+  if (e.classList.contains("ingredients__selected")) {
+    ingredients.deselect(e);
+  }
+
+  if (e.classList.contains("appliances__selected")) {
+    appliances.deselect(e);
+  }
+
+  if (e.classList.contains("ustensils__selected")) {
+    ustensils.deselect(e);
+  }
+
   e.remove();
 }

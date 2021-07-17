@@ -7,7 +7,7 @@ class Ustensils extends Categories {
     this.filtered = new Set();
     list.filtered.forEach((recipe) => {
       recipe.ustensils.forEach((ustensil) => {
-        this.isMatchingIngredient(ustensil, input, this.filtered, ustensil);
+        this.isMatchingUstensil(ustensil, input, this.filtered, ustensil);
       });
     });
   }
@@ -16,13 +16,13 @@ class Ustensils extends Categories {
     let newFilteredList = new Set();
     list.all.forEach((recipe) =>
       recipe.ustensils.forEach((ustensil) => {
-        this.isMatchingIngredient(ustensil, input, newFilteredList, recipe);
+        this.isMatchingUstensil(ustensil, input, newFilteredList, recipe);
       })
     );
     list.filtered = newFilteredList;
   }
 
-  isMatchingIngredient(ustensil, input, destinationList, matchingItem) {
+  isMatchingUstensil(ustensil, input, destinationList, matchingItem) {
     if (
       this.normalizeInput(input).every((element) =>
         this.normalizeInput(ustensil).find((item) => item.includes(element))
@@ -30,5 +30,14 @@ class Ustensils extends Categories {
     ) {
       destinationList.add(matchingItem);
     }
+  }
+
+  select(input) {
+    this.selected.add(input);
+    console.log(this.selected);
+  }
+
+  deselect(input) {
+    this.selected.delete(input.textContent);
   }
 }

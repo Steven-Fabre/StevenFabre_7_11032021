@@ -39,11 +39,6 @@ class List {
     this.display();
   }
 
-  checkForSelected() {
-    if (this.selected.length == 0) return list.all;
-    else return list.selected;
-  }
-
   displayListElements(datavalue, inputID) {
     document.getElementById(`${datavalue}`).classList.toggle("dropdown__active");
     if (document.getElementById(`${datavalue}`).classList.contains("dropdown__active")) {
