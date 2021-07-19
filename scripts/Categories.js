@@ -6,23 +6,6 @@ class Categories {
     this.type = type;
   }
 
-  renderItem() {
-    let html = ``;
-    for (let ingredient of this.filtered) {
-      html += `<span data-categorie="${this.type}" class="secondary__result">${ingredient}</span>`;
-    }
-    document.getElementById(`${this.type}__list`).innerHTML = html;
-  }
-
-  normalizeInput(input) {
-    return input
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace("'", " ")
-      .split(" ");
-  }
-
   listenForFiltered() {
     document.getElementById(`${this.type}__input`).addEventListener("input", (e) => {
       if (e.target.value.length >= 3) {
@@ -50,6 +33,23 @@ class Categories {
         list.filterRecipes();
       }
     });
+  }
+
+  normalizeInput(input) {
+    return input
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace("'", " ")
+      .split(" ");
+  }
+
+  renderItem() {
+    let html = ``;
+    for (let ingredient of this.filtered) {
+      html += `<span data-categorie="${this.type}" class="secondary__result">${ingredient}</span>`;
+    }
+    document.getElementById(`${this.type}__list`).innerHTML = html;
   }
 
   renderSelected() {

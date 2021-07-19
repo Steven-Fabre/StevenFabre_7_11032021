@@ -18,13 +18,31 @@ class List {
     destination.innerHTML = html;
   }
 
-  filterRecipes() {
-    this.filtered = this.all;
-    this.filterByIngredients();
-    this.filterByAppliances();
-    this.filterByUstensils();
-    this.resetFilters();
-    this.display();
+  displayListElements(datavalue, inputID) {
+    document.getElementById(`${datavalue}`).classList.toggle("dropdown__active");
+    if (document.getElementById(`${datavalue}`).classList.contains("dropdown__active")) {
+      document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.remove("hide"));
+      document.getElementById(inputID).nextElementSibling.classList.add("chevron__active");
+    } else {
+      document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.add("hide"));
+    }
+    document.getElementById(`${datavalue}__list`).classList.toggle("hide");
+  }
+
+  filterByAppliances() {
+    appliances.selected.forEach((select) => {
+      let newFilteredList = new Set();
+      this.filtered.forEach((recipe) => {
+        if (
+          appliances
+            .normalizeInput(select)
+            .every((element) => appliances.normalizeInput(...recipe.appliances).find((item) => item.includes(element)))
+        ) {
+          newFilteredList.add(recipe);
+        }
+      });
+      list.filtered = newFilteredList;
+    });
   }
 
   filterByIngredients() {
@@ -42,22 +60,6 @@ class List {
             newFilteredList.add(recipe);
           }
         });
-      });
-      list.filtered = newFilteredList;
-    });
-  }
-
-  filterByAppliances() {
-    appliances.selected.forEach((select) => {
-      let newFilteredList = new Set();
-      this.filtered.forEach((recipe) => {
-        if (
-          appliances
-            .normalizeInput(select)
-            .every((element) => appliances.normalizeInput(...recipe.appliances).find((item) => item.includes(element)))
-        ) {
-          newFilteredList.add(recipe);
-        }
       });
       list.filtered = newFilteredList;
     });
@@ -81,22 +83,13 @@ class List {
     });
   }
 
-  resetFilters() {
-    filters.forEach((filter) => {
-      filter.filter("");
-      filter.renderItem();
-    });
-  }
-
-  displayListElements(datavalue, inputID) {
-    document.getElementById(`${datavalue}`).classList.toggle("dropdown__active");
-    if (document.getElementById(`${datavalue}`).classList.contains("dropdown__active")) {
-      document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.remove("hide"));
-      document.getElementById(inputID).nextElementSibling.classList.add("chevron__active");
-    } else {
-      document.getElementById(`${datavalue}__list`).childNodes.forEach((e) => e.classList.add("hide"));
-    }
-    document.getElementById(`${datavalue}__list`).classList.toggle("hide");
+  filterRecipes() {
+    this.filtered = this.all;
+    this.filterByIngredients();
+    this.filterByAppliances();
+    this.filterByUstensils();
+    this.resetFilters();
+    this.display();
   }
 
   hideList() {
@@ -114,7 +107,10 @@ class List {
     this.display();
   }
 
-  capitalizeFirstLetter(string) {
-    return string && string[0].toUpperCase() + string.slice(1);
+  resetFilters() {
+    filters.forEach((filter) => {
+      filter.filter("");
+      filter.renderItem();
+    });
   }
 }
