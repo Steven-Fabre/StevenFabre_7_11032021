@@ -1,39 +1,24 @@
 class Appliances extends Categories {
-  constructor() {
-    super(Appliances);
+  constructor(type) {
+    super(type);
   }
 
-  collect(input) {
-    this.filtered = new Set();
-    list.filtered.forEach((recipe) => {
-      this.isMatchingAppliance(...recipe.appliances, input, this.filtered, ...recipe.appliances);
+  collect() {
+    list.all.forEach((recipe) => {
+      this.all.add(recipe.appliances);
     });
   }
 
   filter(input) {
-    let newFilteredList = new Set();
-    list.all.forEach((recipe) => {
-      this.isMatchingAppliance(...recipe.appliances, input, newFilteredList, recipe);
+    this.filtered = new Set();
+    list.filtered.forEach((recipe) => {
+      if (
+        this.normalizeInput(input).every((element) =>
+          this.normalizeInput(...recipe.appliances).find((item) => item.includes(element))
+        )
+      ) {
+        this.filtered.add(...recipe.appliances);
+      }
     });
-    list.filtered = newFilteredList;
-  }
-
-  isMatchingAppliance(appliance, input, destinationList, matchingItem) {
-    if (
-      this.normalizeInput(input).every((element) =>
-        this.normalizeInput(appliance).find((item) => item.includes(element))
-      )
-    ) {
-      destinationList.add(matchingItem);
-    }
-  }
-
-  select(input) {
-    this.selected.add(input);
-    console.log(this.selected);
-  }
-
-  deselect(input) {
-    this.selected.delete(input.textContent);
   }
 }

@@ -18,25 +18,74 @@ class List {
     destination.innerHTML = html;
   }
 
-  filterByIngredients(input) {
-    ingredients.filter(input);
-    ingredients.collect(input);
-    ingredients.renderItem("ingredients");
+  filterRecipes() {
+    this.filtered = this.all;
+    this.filterByIngredients();
+    this.filterByAppliances();
+    this.filterByUstensils();
+    this.resetFilters();
     this.display();
   }
 
-  filterByAppliances(input) {
-    appliances.collect(input);
-    appliances.filter(input);
-    appliances.renderItem("appliances");
-    this.display();
+  filterByIngredients() {
+    ingredients.selected.forEach((select) => {
+      let newFilteredList = new Set();
+      this.filtered.forEach((recipe) => {
+        recipe.ingredients.forEach((ingredient) => {
+          if (
+            ingredients
+              .normalizeInput(select)
+              .every((element) =>
+                ingredients.normalizeInput(ingredient.ingredient).find((item) => item.includes(element))
+              )
+          ) {
+            newFilteredList.add(recipe);
+          }
+        });
+      });
+      list.filtered = newFilteredList;
+    });
   }
 
-  filterByUstensils(input) {
-    ustensils.collect(input);
-    ustensils.filter(input);
-    ustensils.renderItem("ustensils");
-    this.display();
+  filterByAppliances() {
+    appliances.selected.forEach((select) => {
+      let newFilteredList = new Set();
+      this.filtered.forEach((recipe) => {
+        if (
+          appliances
+            .normalizeInput(select)
+            .every((element) => appliances.normalizeInput(...recipe.appliances).find((item) => item.includes(element)))
+        ) {
+          newFilteredList.add(recipe);
+        }
+      });
+      list.filtered = newFilteredList;
+    });
+  }
+
+  filterByUstensils() {
+    ustensils.selected.forEach((select) => {
+      let newFilteredList = new Set();
+      this.filtered.forEach((recipe) => {
+        recipe.ustensils.forEach((ustensil) => {
+          if (
+            ustensils
+              .normalizeInput(select)
+              .every((element) => ustensils.normalizeInput(ustensil).find((item) => item.includes(element)))
+          ) {
+            newFilteredList.add(recipe);
+          }
+        });
+      });
+      list.filtered = newFilteredList;
+    });
+  }
+
+  resetFilters() {
+    filters.forEach((filter) => {
+      filter.filter("");
+      filter.renderItem();
+    });
   }
 
   displayListElements(datavalue, inputID) {
@@ -59,41 +108,11 @@ class List {
 
   init() {
     list.filtered = new Set(list.all);
-    list.filterByIngredients("");
-    list.filterByAppliances("");
-    list.filterByUstensils("");
+    ingredients.renderItem("ingredients");
+    appliances.renderItem("appliances");
+    ustensils.renderItem("ustensils");
     this.display();
   }
-
-  // filterSelection(selectedlist) {
-  //   Array.from(selectedlist).every((element) => {
-  //     Array.from(list.filtered).forEach((item) => {
-  //       item.ingredients.find((ingredient) => {
-  //         if (ingredient.ingredient == element) {
-  //           list.selected.add(item);
-  //           list.filtered = list.selected;
-  //         }
-  //       });
-  //       if (item.appliances == element) {
-  //         list.selected.add(item);
-  //       }
-  //       item.ustensils.forEach((ustensil) => {
-  //         if (
-  //           this.capitalizeFirstLetter(
-  //             ustensil
-  //               .toLowerCase()
-  //               .normalize("NFD")
-  //               .replace(/[\u0300-\u036f]/g, "")
-  //               .replace("'", " ")
-  //           ) == element
-  //         ) {
-  //           list.selected.add(item);
-  //         }
-  //       });
-  //     });
-  //   });
-  //   this.display();
-  // }
 
   capitalizeFirstLetter(string) {
     return string && string[0].toUpperCase() + string.slice(1);

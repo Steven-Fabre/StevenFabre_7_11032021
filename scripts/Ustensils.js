@@ -1,43 +1,27 @@
 class Ustensils extends Categories {
-  constructor() {
-    super(Ustensils);
+  constructor(type) {
+    super(type);
   }
-
-  collect(input) {
-    this.filtered = new Set();
-    list.filtered.forEach((recipe) => {
+  collect() {
+    list.all.forEach((recipe) => {
       recipe.ustensils.forEach((ustensil) => {
-        this.isMatchingUstensil(ustensil, input, this.filtered, ustensil);
+        this.all.add(ustensil);
       });
     });
   }
 
   filter(input) {
-    let newFilteredList = new Set();
-    list.all.forEach((recipe) =>
+    this.filtered = new Set();
+    list.filtered.forEach((recipe) => {
       recipe.ustensils.forEach((ustensil) => {
-        this.isMatchingUstensil(ustensil, input, newFilteredList, recipe);
-      })
-    );
-    list.filtered = newFilteredList;
-  }
-
-  isMatchingUstensil(ustensil, input, destinationList, matchingItem) {
-    if (
-      this.normalizeInput(input).every((element) =>
-        this.normalizeInput(ustensil).find((item) => item.includes(element))
-      )
-    ) {
-      destinationList.add(matchingItem);
-    }
-  }
-
-  select(input) {
-    this.selected.add(input);
-    console.log(this.selected);
-  }
-
-  deselect(input) {
-    this.selected.delete(input.textContent);
+        if (
+          this.normalizeInput(input).every((element) =>
+            this.normalizeInput(ustensil).find((item) => item.includes(element))
+          )
+        ) {
+          this.filtered.add(ustensil);
+        }
+      });
+    });
   }
 }
