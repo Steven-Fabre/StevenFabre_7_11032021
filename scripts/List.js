@@ -19,7 +19,7 @@ class List {
       });
       createSimplifiedWordList(ingredients.normalizeInput(recipe.name));
       createSimplifiedWordList(ingredients.normalizeInput(recipe.description));
-      simplifiedRecipe.words = Array.from(simplifiedRecipe.words);
+      simplifiedRecipe.words = Array.from(simplifiedRecipe.words).sort();
       this.simplified.add(simplifiedRecipe);
     });
 
