@@ -161,7 +161,7 @@ class List {
     this.filtered = new Set();
     this.simplified.forEach((recipe) => {
       if (ingredients.normalizeInput(input).every((element) => recipe.words.find((item) => item.includes(element)))) {
-        this.filtered.add(this.all.find((meal) => meal.id == recipe.id));
+        return this.filtered.add(this.all.find((meal) => meal.id == recipe.id));
       }
     });
   }
