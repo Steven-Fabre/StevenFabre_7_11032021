@@ -16,8 +16,8 @@ class Ingredients extends Categories {
     list.filtered.forEach((recipe) => {
       recipe.ingredients.forEach((ingredient) => {
         if (
-          this.normalizeInput(input).every((element) =>
-            this.normalizeInput(ingredient.ingredient).find((item) => item.includes(element))
+          normalizeString(input).every((element) =>
+            normalizeString(ingredient.ingredient).find((item) => item.includes(element))
           )
         ) {
           this.filtered.add(ingredient.ingredient);

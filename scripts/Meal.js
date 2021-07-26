@@ -38,4 +38,20 @@ class Meal {
     }
     return html;
   }
+
+  collectKeywords() {
+    let keywords = new Set();
+    function createSimplifiedWordList(arrayOfWords) {
+      arrayOfWords.forEach((word) => {
+        if (word.length > 2) keywords.add(word);
+      });
+    }
+
+    this.ingredients.forEach((ingredient) => {
+      createSimplifiedWordList(normalizeString(ingredient.ingredient));
+    });
+    createSimplifiedWordList(normalizeString(this.name));
+    createSimplifiedWordList(normalizeString(this.description));
+    return Array.from(keywords).sort();
+  }
 }
