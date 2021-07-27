@@ -3,18 +3,36 @@ class List {
     this.all = [];
     this.filtered = new Set();
     this.selected = new Set();
-    this.simplified = [];
   }
 
   add(item) {
     this.all.push(item);
   }
 
-  createSimplifiedList() {
-    let simplifiedRecipe;
+  matchingRecipes(input) {
+    this.filtered = new Set();
     this.all.forEach((recipe) => {
-      simplifiedRecipe = { id: recipe.id, words: recipe.collectKeywords() };
-      this.simplified.push(simplifiedRecipe);
+      recipe.ingredients.forEach((ingredient) => {
+        if (
+          normalizeString(input).every((element) =>
+            normalizeString(ingredient.ingredient).find((item) => item.includes(element))
+          )
+        ) {
+          return this.filtered.add(recipe);
+        }
+      });
+      if (
+        normalizeString(input).every((element) => normalizeString(recipe.name).find((item) => item.includes(element)))
+      ) {
+        return this.filtered.add(recipe);
+      }
+      if (
+        normalizeString(input).every((element) =>
+          normalizeString(recipe.description).find((item) => item.includes(element))
+        )
+      ) {
+        return this.filtered.add(recipe);
+      }
     });
   }
 
@@ -111,7 +129,6 @@ class List {
     ustensils.renderItem("ustensils");
     this.display();
     this.search();
-    this.createSimplifiedList();
     this.listenForInput();
   }
 
@@ -125,15 +142,6 @@ class List {
     document.addEventListener("click", function (e) {
       if (!e.target.closest(`.dropdown__active`)) list.hideList();
       if (e.target.closest(".fa-chevron-down")) list.hideList();
-    });
-  }
-
-  matchingRecipes(input) {
-    this.filtered = new Set();
-    this.simplified.forEach((recipe) => {
-      if (normalizeString(input).every((element) => recipe.words.find((item) => item.includes(element)))) {
-        return this.filtered.add(this.all.find((meal) => meal.id == recipe.id));
-      }
     });
   }
 
