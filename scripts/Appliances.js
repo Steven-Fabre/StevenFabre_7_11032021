@@ -13,8 +13,8 @@ class Appliances extends Categories {
     this.filtered = new Set();
     list.filtered.forEach((recipe) => {
       if (
-        this.normalizeInput(input).every((element) =>
-          this.normalizeInput(...recipe.appliances).find((item) => item.includes(element))
+        normalizeString(input).every((element) =>
+          normalizeString(...recipe.appliances).find((item) => item.includes(element))
         )
       ) {
         this.filtered.add(...recipe.appliances);
