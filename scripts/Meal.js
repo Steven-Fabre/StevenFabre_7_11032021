@@ -50,8 +50,10 @@ class Meal {
     this.ingredients.forEach((ingredient) => {
       createSimplifiedWordList(normalizeString(ingredient.ingredient));
     });
+    createSimplifiedWordList(normalizeString(...this.ustensils));
+    createSimplifiedWordList(normalizeString(...this.appliances));
     createSimplifiedWordList(normalizeString(this.name));
     createSimplifiedWordList(normalizeString(this.description));
-    return Array.from(keywords).sort();
+    return Array.from(keywords);
   }
 }
