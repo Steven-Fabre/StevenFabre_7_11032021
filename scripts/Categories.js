@@ -35,15 +35,6 @@ class Categories {
     });
   }
 
-  normalizeInput(input) {
-    return input
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace("'", " ")
-      .split(" ");
-  }
-
   renderItem() {
     let html = ``;
     for (let ingredient of this.filtered) {

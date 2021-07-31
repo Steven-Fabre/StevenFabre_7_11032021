@@ -15,9 +15,7 @@ class Ustensils extends Categories {
     list.filtered.forEach((recipe) => {
       recipe.ustensils.forEach((ustensil) => {
         if (
-          this.normalizeInput(input).every((element) =>
-            this.normalizeInput(ustensil).find((item) => item.includes(element))
-          )
+          normalizeString(input).every((element) => normalizeString(ustensil).find((item) => item.includes(element)))
         ) {
           this.filtered.add(ustensil);
         }

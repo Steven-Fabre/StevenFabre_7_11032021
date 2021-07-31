@@ -3,10 +3,19 @@ class List {
     this.all = [];
     this.filtered = new Set();
     this.selected = new Set();
+    this.simplified = [];
   }
 
   add(item) {
     this.all.push(item);
+  }
+
+  createSimplifiedList() {
+    let simplifiedRecipe;
+    this.all.forEach((recipe) => {
+      simplifiedRecipe = { id: recipe.id, words: recipe.collectKeywords() };
+      this.simplified.push(simplifiedRecipe);
+    });
   }
 
   display() {
@@ -34,9 +43,9 @@ class List {
       let newFilteredList = new Set();
       this.filtered.forEach((recipe) => {
         if (
-          appliances
-            .normalizeInput(select)
-            .every((element) => appliances.normalizeInput(...recipe.appliances).find((item) => item.includes(element)))
+          normalizeString(select).every((element) =>
+            normalizeString(...recipe.appliances).find((item) => item.includes(element))
+          )
         ) {
           newFilteredList.add(recipe);
         }
@@ -51,11 +60,9 @@ class List {
       this.filtered.forEach((recipe) => {
         recipe.ingredients.forEach((ingredient) => {
           if (
-            ingredients
-              .normalizeInput(select)
-              .every((element) =>
-                ingredients.normalizeInput(ingredient.ingredient).find((item) => item.includes(element))
-              )
+            normalizeString(select).every((element) =>
+              normalizeString(ingredient.ingredient).find((item) => item.includes(element))
+            )
           ) {
             newFilteredList.add(recipe);
           }
@@ -71,9 +78,7 @@ class List {
       this.filtered.forEach((recipe) => {
         recipe.ustensils.forEach((ustensil) => {
           if (
-            ustensils
-              .normalizeInput(select)
-              .every((element) => ustensils.normalizeInput(ustensil).find((item) => item.includes(element)))
+            normalizeString(select).every((element) => normalizeString(ustensil).find((item) => item.includes(element)))
           ) {
             newFilteredList.add(recipe);
           }
@@ -105,6 +110,31 @@ class List {
     appliances.renderItem("appliances");
     ustensils.renderItem("ustensils");
     this.display();
+    this.search();
+    this.createSimplifiedList();
+    this.listenForInput();
+  }
+
+  listenForInput() {
+    document.querySelectorAll(".categories").forEach((input) =>
+      input.addEventListener("focus", function () {
+        list.hideList();
+        list.displayListElements(input.getAttribute("data-value"), input.id);
+      })
+    );
+    document.addEventListener("click", function (e) {
+      if (!e.target.closest(`.dropdown__active`)) list.hideList();
+      if (e.target.closest(".fa-chevron-down")) list.hideList();
+    });
+  }
+
+  matchingRecipes(input) {
+    this.filtered = new Set();
+    this.simplified.forEach((recipe) => {
+      if (normalizeString(input).every((element) => recipe.words.find((item) => item.includes(element)))) {
+        return this.filtered.add(this.all.find((meal) => meal.id == recipe.id));
+      }
+    });
   }
 
   resetFilters() {
@@ -112,5 +142,26 @@ class List {
       filter.filter("");
       filter.renderItem();
     });
+  }
+
+  search() {
+    document.getElementById("main__search").addEventListener(
+      "keyup",
+      debounce(function (e) {
+        if (e.target.value.length > 2) {
+          list.matchingRecipes(e.target.value);
+          ingredients.filter();
+          ingredients.renderItem();
+          ustensils.filter();
+          ustensils.renderItem();
+          appliances.filter();
+          appliances.renderItem();
+          list.display();
+        } else {
+          list.filtered = list.all;
+          list.display();
+        }
+      }, 600)
+    );
   }
 }
