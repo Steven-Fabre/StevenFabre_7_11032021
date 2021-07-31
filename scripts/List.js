@@ -42,7 +42,10 @@ class List {
     for (let item of this.filtered) {
       html += item.render();
     }
-    destination.innerHTML = html;
+    if (html) destination.innerHTML = html;
+    else
+      destination.innerHTML = `<h2> Aucune recette ne correspond à votre critère… vous pouvez
+    chercher « tarte aux pommes », « poisson », etc.</h2>`;
   }
 
   displayListElements(datavalue, inputID) {
