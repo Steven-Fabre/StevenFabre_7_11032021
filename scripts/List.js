@@ -9,33 +9,6 @@ class List {
     this.all.push(item);
   }
 
-  matchingRecipes(input) {
-    this.filtered = new Set();
-    this.all.forEach((recipe) => {
-      recipe.ingredients.forEach((ingredient) => {
-        if (
-          normalizeString(input).every((element) =>
-            normalizeString(ingredient.ingredient).find((item) => item.includes(element))
-          )
-        ) {
-          return this.filtered.add(recipe);
-        }
-      });
-      if (
-        normalizeString(input).every((element) => normalizeString(recipe.name).find((item) => item.includes(element)))
-      ) {
-        return this.filtered.add(recipe);
-      }
-      if (
-        normalizeString(input).every((element) =>
-          normalizeString(recipe.description).find((item) => item.includes(element))
-        )
-      ) {
-        return this.filtered.add(recipe);
-      }
-    });
-  }
-
   display() {
     let html = ``;
     let destination = document.getElementById("meals");
@@ -145,6 +118,33 @@ class List {
     document.addEventListener("click", function (e) {
       if (!e.target.closest(`.dropdown__active`)) list.hideList();
       if (e.target.closest(".fa-chevron-down")) list.hideList();
+    });
+  }
+
+  matchingRecipes(input) {
+    this.filtered = new Set();
+    this.all.forEach((recipe) => {
+      recipe.ingredients.forEach((ingredient) => {
+        if (
+          normalizeString(input).every((element) =>
+            normalizeString(ingredient.ingredient).find((item) => item.includes(element))
+          )
+        ) {
+          return this.filtered.add(recipe);
+        }
+      });
+      if (
+        normalizeString(input).every((element) => normalizeString(recipe.name).find((item) => item.includes(element)))
+      ) {
+        return this.filtered.add(recipe);
+      }
+      if (
+        normalizeString(input).every((element) =>
+          normalizeString(recipe.description).find((item) => item.includes(element))
+        )
+      ) {
+        return this.filtered.add(recipe);
+      }
     });
   }
 
