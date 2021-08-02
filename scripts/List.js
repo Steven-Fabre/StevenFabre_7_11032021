@@ -153,17 +153,16 @@ class List {
       debounce(function (e) {
         if (e.target.value.length > 2) {
           list.matchingRecipes(e.target.value);
-          ingredients.filter();
-          ingredients.renderItem();
-          ustensils.filter();
-          ustensils.renderItem();
-          appliances.filter();
-          appliances.renderItem();
-          list.display();
         } else {
           list.filtered = list.all;
-          list.display();
         }
+        ingredients.filter();
+        ingredients.renderItem();
+        ustensils.filter();
+        ustensils.renderItem();
+        appliances.filter();
+        appliances.renderItem();
+        list.display();
       }, 600)
     );
   }
